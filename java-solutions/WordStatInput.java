@@ -4,13 +4,10 @@ public class WordStatInput {
     public static void main(String[] args) {
         Map <String, Integer> wordStat = new LinkedHashMap <String, Integer>();
         try {
-            BufferedReader mainReader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(args[0]),
-                "UTF-8"
-            ));
+            BetterScanner mainReader = new BetterScanner(new File(args[0]));
             try {
-                String lineReader = mainReader.readLine();
-                while (lineReader != null) {
+                while (mainReader.hasNextLine()) {
+                    String lineReader = mainReader.nextLine();
                     int wordEndPos = 0;
                     int wordStartPos = 0;
                     String curWord = "";
@@ -23,10 +20,7 @@ public class WordStatInput {
                         } else {
                             if (wordEndPos != wordStartPos) { 
                                 curWord = lineReader.substring(wordStartPos, wordEndPos).trim();
-                                if (wordStat.containsKey(curWord)) {
-                                    int curCount = wordStat.get(curWord);
-                                    wordStat.put(curWord, wordStat.getOrDefolt(curWord, 0) + 1)
-                                }
+                                wordStat.put(curWord, wordStat.getOrDefault(curWord, 0) + 1);
                             }
                             wordEndPos = i + 1;
                             wordStartPos = i + 1;
@@ -34,12 +28,8 @@ public class WordStatInput {
                     }
                     if (wordEndPos != wordStartPos) { 
                         curWord = lineReader.substring(wordStartPos, wordEndPos).trim();
-                        if (wordStat.containsKey(curWord)) {
-                            int curCount = wordStat.get(curWord);
-                            wordStat.put(curWord, wordStat.getOrDefolt(curWord, 0) + 1)
-                        }
+                        wordStat.put(curWord, wordStat.getOrDefault(curWord, 0) + 1);
                     }
-                    lineReader = mainReader.readLine();
                 }
             } finally {
                 mainReader.close();
