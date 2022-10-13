@@ -74,6 +74,9 @@ public class BetterScanner {
                         break;
                     }
                 } else {
+                    if (wasLineSep) {
+                        break;
+                    }
                     outputString.append(charBuffer[posInBuffer]);   
                     posInBuffer++;
                 }
