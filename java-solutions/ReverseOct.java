@@ -3,15 +3,15 @@ import java.util.*;
 public class ReverseOct {
     public static void main( String[] args ) {
         BetterScanner mainScan = new BetterScanner(System.in);
-        long[][] resultArray = new long[1][1];
+        int[][] resultArray = new int[1][1];
         int height = 0; 
         while (mainScan.hasNextLine()) {
             String mN = mainScan.nextLine();
             BetterScanner lineScan = new BetterScanner(mN);
-            long[] lineArray = new long[1];
+            int[] lineArray = new int[1];
             int width = 0;
             while (lineScan.hasNext()) {
-                lineArray[width] = Long.parseLong(lineScan.next(), 8);
+                lineArray[width] = Integer.parseUnsignedInt(lineScan.next(), 8);
                 width++;
                 if (width >= lineArray.length) {
                     lineArray = Arrays.copyOf(lineArray, lineArray.length * 2);
@@ -26,7 +26,7 @@ public class ReverseOct {
         resultArray = Arrays.copyOf(resultArray, height);
         for (int i = resultArray.length - 1; i >= 0; i--) {
             for (int j = resultArray[i].length - 1; j >= 0; j--) {
-                System.out.print(Long.toOctalString(resultArray[i][j]) + " ");
+                System.out.print(Integer.toOctalString(resultArray[i][j]) + " ");
             }
             System.out.println();
         }
