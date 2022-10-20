@@ -1,7 +1,7 @@
 package markup;
 import java.util.List;
 
-public class Markdown {
+public abstract class Markdown {
     protected List<Markdown> elements;
     private String openTag;
     private String closeTag;
