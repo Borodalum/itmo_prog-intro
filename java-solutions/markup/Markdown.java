@@ -21,6 +21,7 @@ public abstract class Markdown {
 
     public void toMarkdown(StringBuilder sb) {
         sb.append(openTag);
+        // extract
         for (Markdown element : elements) {
             element.toMarkdown(sb);
         }
