@@ -9,4 +9,9 @@ public class Text extends Markdown {
     public void toMarkdown(StringBuilder sb) { 
         sb.append(text);
     }
+    @Override
+    public void toHtml(StringBuilder sb) { 
+        sb.append(text);
+    }
+
 }
