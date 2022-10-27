@@ -1,19 +1,19 @@
 package markup;
 import java.util.List;
 
-public class Paragraph extends Markdown { 
-    public Paragraph(List<Markdown> elements) {
+public class Paragraph implements Markup { 
+    private List<Markup> elements;
+    public Paragraph(List<Markup> elements) {
         this.elements = elements;
     }
-    @Override
+    
     public void toMarkdown(StringBuilder sb) {
-        for (Markdown element : elements) {
+        for (Markup element : elements) {
             element.toMarkdown(sb);
         }
     }
-    @Override
     public void toHtml(StringBuilder sb) {
-        for (Markdown element : elements) {
+        for (Markup element : elements) {
             element.toHtml(sb);
         }
     }

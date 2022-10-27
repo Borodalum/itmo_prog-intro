@@ -1,37 +1,31 @@
 package markup;
 import java.util.List;
 
-public abstract class Markdown {
-    protected List<Markdown> elements;
-    private String openTag;
-    private String closeTag;
-    private String openTagHTML;
-    private String closeTagHTML;
+public abstract class Markdown implements Markup {
+    private List<Markup> elements;
+    private String markdownTag;
+    private String htmlTag;
 
-    public Markdown() {}
-
-    protected void setupTags(String openTag, String closeTag) {
-        this.openTag = openTag;
-        this.closeTag = closeTag;
-    }
-    protected void setupHTMLTags(String openTagHTML, String closeTagHTML) {
-        this.openTagHTML = openTagHTML;
-        this.closeTagHTML = closeTagHTML;
+    public Markdown(List<Markup> elemList, String mdTag, String htmlTag) {
+        this.elements = elemList;
+        this.markdownTag = mdTag;
+        this.htmlTag = htmlTag;
     }
 
     public void toMarkdown(StringBuilder sb) {
-        sb.append(openTag);
-        // extract
-        for (Markdown element : elements) {
+        sb.append(markdownTag);
+        for (Markup element : elements) {
             element.toMarkdown(sb);
         }
-        sb.append(closeTag);
+        sb.append(markdownTag);
     }
     public void toHtml(StringBuilder sb) {
-        sb.append(openTagHTML);
-        for (Markdown element : elements) {
+        String beginning = "<" + htmlTag + ">";
+        String ending = "</" + htmlTag + ">";
+        sb.append(beginning);
+        for (Markup element : elements) {
             element.toHtml(sb);
         }
-        sb.append(closeTagHTML);
+        sb.append(ending);
     }
 }
