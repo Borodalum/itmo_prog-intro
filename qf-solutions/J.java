@@ -11,7 +11,7 @@ public class J {
             String line = sc.next(); // лутаем 
             for (int j = 0; j < n; j++) {
                 inputGraph[i][j] = (line.charAt(j) - '0');
-                //так как char ~ short - арифметика меняет тип на short, легко конвертируемый в int
+                //так как char ~ short - арифметика -> short, легко конвертируемый в int
             }
         }
 
@@ -19,7 +19,7 @@ public class J {
             for (int j = 0; j < n; j++) {
                 if (inputGraph[i][j] == 1) {
                     fixedGraph[i][j] = 1; // восстанавливаем граф
-                    // проходимся по элементам мяу строк i and j
+                    // проходимся по элементам k строк i и j
                     for (int k = j + 1; k < n; k++) {
                         inputGraph[i][k] = (inputGraph[i][k] - inputGraph[j][k] + 10) % 10;
                         /* 
