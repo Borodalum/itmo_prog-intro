@@ -13,11 +13,14 @@ public class I {
             int y = sc.nextInt();
             int h = sc.nextInt();
             
+            // формулы по входным данным
+
             max[0] = Math.max(x + h, max[0]);
             max[1] = Math.max(y + h, max[1]);
             min[0] = Math.min(x - h, min[0]);
             min[1] = Math.min(y - h, min[1]);
         }
+        // формулы
         int maxValue = Math.max(max[0] - min[0], max[1] - min[1]);
         int h = (int)Math.ceil(maxValue / 2.0);
         int x = (min[0] + max[0]) / 2;
