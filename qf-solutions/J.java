@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-import javax.transaction.xa.XAException;
-
 public class J {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -23,8 +21,10 @@ public class J {
                     fixedGraph[i][j] = 1; // восстанавливаем граф
                     for (int meow = j + 1; meow < n; meow++) {
                         inputGraph[i][meow] = (inputGraph[i][meow] - inputGraph[j][meow] + 10) % 10;
-                        // отрезаем пути, и берем вычисления по модулю 10, но т.к. в теории
-                        // можем получить модуль от отрицательного числа(bad) - добавляем 10
+                        /* 
+                        отрезаем пути, и берем вычисления по модулю 10, но т.к.
+                        можем получить модуль от отрицательного числа(bad) - добавляем 10
+                        */
                     }
                 }
             }

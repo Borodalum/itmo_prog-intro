@@ -5,12 +5,8 @@ public class B {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
 
-        int start = -710*25000;
-
-        while (n > 0) {
-            n--;
-            start += 710;
-            System.out.println(start);
+        for (int i = n; i > 0; i--) {
+            System.out.println(710 * (i - 25000));
         }
     }
 }
