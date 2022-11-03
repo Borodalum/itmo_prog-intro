@@ -10,8 +10,7 @@ public class J {
         for (int i = 0; i < n; i++) {
             String line = sc.next(); // лутаем 
             for (int j = 0; j < n; j++) {
-                inputGraph[i][j] = (line.charAt(j) - '0');
-                //так как char ~ short - арифметика -> short, легко конвертируемый в int
+                inputGraph[i][j] = Character.getNumericValue(line.charAt(j));
             }
         }
 
