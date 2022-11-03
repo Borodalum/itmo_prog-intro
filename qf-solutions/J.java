@@ -18,7 +18,6 @@ public class J {
             for (int j = 0; j < n; j++) {
                 if (inputGraph[i][j] == 1) {
                     fixedGraph[i][j] = 1; // восстанавливаем граф
-                    // проходимся по элементам k строк i и j
                     for (int k = j + 1; k < n; k++) {
                         inputGraph[i][k] = (inputGraph[i][k] - inputGraph[j][k] + 10) % 10;
                         /* 
