@@ -51,39 +51,17 @@ public class HtmlConverter {
         String curToken = "";
         while (i < bigToken.length()) {
             char token = bigToken.charAt(i);
+            String temp = "";
             if (token == '*' || token == '_') {
-                String temp;
                 if (i + 1 < bigToken.length() && bigToken.charAt(i + 1) == token) {
                     temp = Character.toString(token).repeat(2);
                     i++;
                 } else {
                     temp = Character.toString(token);
                 }
-                if (curToken.equals(temp)) {
-                    convertedHTML.append("<").append(alphabet.get(curToken)).append(">");
-                    parseInternal(buffer.toString());
-                    convertedHTML.append("</").append(alphabet.get(curToken)).append(">");
-                    curToken = "";
-                    buffer.setLength(0);
-                } else if (curToken.isEmpty()){
-                    curToken = temp;
-                } else {
-                    buffer.append(temp);
-                }
             } else if (token == '-') {
                 if (i + 1 < bigToken.length() && bigToken.charAt(i + 1) == token) {
-                    String temp = Character.toString(token).repeat(2);
-                    if (curToken.equals(temp)) {
-                        convertedHTML.append("<").append(alphabet.get(curToken)).append(">");
-                        parseInternal(buffer.toString());
-                        convertedHTML.append("</").append(alphabet.get(curToken)).append(">");
-                        curToken = "";
-                        buffer.setLength(0);
-                    } else if (curToken.isEmpty()) {
-                        curToken = temp;
-                    } else {
-                        buffer.append(temp);
-                    }
+                    temp = Character.toString(token).repeat(2);
                     i++;
                 } else {
                     if (curToken.isEmpty()) {
@@ -93,31 +71,9 @@ public class HtmlConverter {
                     }
                 }
             } else if (token == '`') {
-                String temp = Character.toString(token);
-                if (curToken.equals(temp)) {
-                    convertedHTML.append("<").append(alphabet.get(curToken)).append(">");
-                    parseInternal(buffer.toString());
-                    convertedHTML.append("</").append(alphabet.get(curToken)).append(">");
-                    curToken = "";
-                    buffer.setLength(0);
-                } else if (curToken.isEmpty()) {
-                    curToken = temp;
-                } else {
-                    buffer.append(temp);
-                }
+                temp = Character.toString(token);
             } else if (token == '~') {
-                String temp = Character.toString(token);
-                if (curToken.equals(temp)) {
-                    convertedHTML.append("<").append(alphabet.get(curToken)).append(">");
-                    parseInternal(buffer.toString());
-                    convertedHTML.append("</").append(alphabet.get(curToken)).append(">");
-                    curToken = "";
-                    buffer.setLength(0);
-                } else if (curToken.isEmpty()) {
-                    curToken = temp;
-                } else {
-                    buffer.append(temp);
-                }
+                temp = Character.toString(token);
             } else if (token == '\\') {
                 if (i + 1 < bigToken.length()) {
                     if (curToken.isEmpty()) {
@@ -129,10 +85,29 @@ public class HtmlConverter {
                 }
             } else if ((token == '<' || token == '>' || token == '&') && curToken.isEmpty()){
                 convertedHTML.append(alphabet.get(Character.toString(token)));
+                i++;
+                continue;
             } else if (curToken.isEmpty()) {
                 convertedHTML.append(token);
+                i++;
+                continue;
             } else {
                 buffer.append(token);
+                i++;
+                continue;
+            }
+            if (!temp.isEmpty()) {
+                if (curToken.equals(temp)) {
+                    convertedHTML.append("<").append(alphabet.get(curToken)).append(">");
+                    parseInternal(buffer.toString());
+                    convertedHTML.append("</").append(alphabet.get(curToken)).append(">");
+                    curToken = "";
+                    buffer.setLength(0);
+                } else if (curToken.isEmpty()) {
+                    curToken = temp;
+                } else {
+                    buffer.append(temp);
+                }
             }
             i++;
         }
