@@ -1,17 +1,18 @@
 package md2html;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class Md2Html {
     public static void main(String[] args) {
         try {
             BufferedReader inputReader = new BufferedReader(new InputStreamReader(
                     new FileInputStream(args[0]),
-                    "UTF-8"
+                    StandardCharsets.UTF_8
             ));
             BufferedWriter outputWriter = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(args[1]),
-                    "UTF-8"
+                    StandardCharsets.UTF_8
             ));
             StringBuilder token = new StringBuilder();
             HtmlConverter mdParser = new HtmlConverter();
