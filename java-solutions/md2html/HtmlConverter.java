@@ -70,19 +70,18 @@ public class HtmlConverter {
                         buffer.append(token);
                     }
                 }
-            } else if (token == '`') {
-                temp = Character.toString(token);
-            } else if (token == '~') {
+            } else if (token == '`' || token == '~') {
                 temp = Character.toString(token);
             } else if (token == '\\') {
-                if (i + 1 < bigToken.length()) {
-                    if (curToken.isEmpty()) {
-                        convertedHTML.append(bigToken.charAt(i + 1));
-                    } else {
-                        buffer.append(bigToken.charAt(i + 1));
-                    }
-                    i++;
+                if (i + 1 >= bigToken.length()) {
+                    continue;
                 }
+                if (curToken.isEmpty()) {
+                    convertedHTML.append(bigToken.charAt(i + 1));
+                } else {
+                    buffer.append(bigToken.charAt(i + 1));
+                }
+                i++;
             } else if ((token == '<' || token == '>' || token == '&') && curToken.isEmpty()){
                 convertedHTML.append(alphabet.get(Character.toString(token)));
                 i++;
