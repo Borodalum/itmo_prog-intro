@@ -15,6 +15,9 @@ public class Game {
             for (Player player : players) {
                 System.out.println("Ход игрока " + player.getIndentifier());
                 final int result = move(board, player, i);
+                if (result == -2) {
+                    return -2;
+                }
                 if (result > -1) {
                     return result;
                 }
@@ -28,6 +31,9 @@ public class Game {
         while (true) {
             System.out.println("Раунд " + roundCount);
             int roundResult = play(board);
+            if (roundResult == -2) {
+                return "Игра сломана.";
+            }
             if (roundResult == players.length) {
                 for (int i = 0; i < results.length; i++) {
                     results[i]++;
@@ -69,6 +75,9 @@ public class Game {
 
     private int move(final Board board, final Player player, int numb) {
         final Move move = player.move(board.getTurn());
+        if (move == null) {
+            return -2;
+        }
         final Result result = board.makeMove(move);
         System.out.println(board);
         if (result == Result.WIN) {

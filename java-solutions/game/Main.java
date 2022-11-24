@@ -19,7 +19,8 @@ public class Main {
 
         System.out.print("Введите имена игроков: ");
         //new RandomPlayer("Лакер", m, n)
-        final Game game = new Game(false, new HumanPlayer(sc.next()), new HumanPlayer(sc.next()));
+        final Game game = new Game(false, new HumanPlayer(sc.next()),
+                new RandomPlayer("Лакер", m, n));
         String result;
 
         //System.out.println("Игра началась!");
