@@ -18,7 +18,7 @@ public class HumanPlayer implements Player {
             String row = in.next();
             String column = in.next();
             try {
-                return new Move(Integer.parseInt(row), Integer.parseInt(column), cell);
+                return new Move(Integer.parseInt(row) - 1, Integer.parseInt(column) - 1, cell);
             } catch (InputMismatchException | NumberFormatException e) {
                 System.out.println("Ход должен составлять два числа - координаты клетки.");
                 System.out.println("Попробуйте еще раз.");

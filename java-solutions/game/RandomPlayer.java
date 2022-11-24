@@ -15,8 +15,8 @@ public class RandomPlayer implements Player{
     }
 
     public Move move(final Cell cell) {
-        int row = random.nextInt(boundM);
-        int column = random.nextInt(boundN);
+        int row = random.nextInt(0, boundM);
+        int column = random.nextInt(0, boundN);
         final Move move = new Move(row, column, cell);
         return move;
     }

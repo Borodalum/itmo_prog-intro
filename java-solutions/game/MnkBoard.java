@@ -81,6 +81,12 @@ public class MnkBoard implements Board {
         return Result.UNKNOWN;
     }
 
+    public void clean() {
+        for (Cell[] row : cells) {
+            Arrays.fill(row, Cell.GROUND);
+        }
+    }
+
     @Override
     public Cell getTurn() {
         return turn;
@@ -89,14 +95,14 @@ public class MnkBoard implements Board {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("▨ ");
-        for (int i = 0; i < cells[0].length; i++) {
+        for (int i = 1; i < cells[0].length + 1; i++) {
             sb.append(i).append("  ");
         }
-        for (int r = 0; r < cells.length; r++) {
-            sb.append("\n");
+        for (int r = 1; r < cells.length + 1; r++) {
+            sb.append(System.lineSeparator());
             sb.append(r).append(" ");
-            for (int c = 0; c < cells[r].length; c++) {
-                sb.append(SYMBOLS.get(cells[r][c])).append(" ");
+            for (int c = 0; c < cells[r - 1].length; c++) {
+                sb.append(SYMBOLS.get(cells[r - 1][c])).append(" ");
             }
         }
         return sb.toString();

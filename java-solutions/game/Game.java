@@ -8,40 +8,80 @@ public class Game {
         this.players = players;
     }
 
-    public String play(Board board) {
-        System.out.println("Игра началась!");
+    public int play(Board board) {
         System.out.println(board.toString());
         while (true) {
             int i = 0;
             for (Player player : players) {
                 System.out.println("Ход игрока " + player.getIndentifier());
-                final String result = move(board, player, i);
-                if (result != null) {
+                final int result = move(board, player, i);
+                if (result > -1) {
                     return result;
                 }
                 i++;
             }
         }
     }
-    /*public String match(Board board, int pointsForWin) {
-        final Match match = new Match(pointsForWin);
-        while (match.getResult == Result.UNKNOWN) {
-            match.playRound(board);
+    public String match(Board board, int pointsForWin) {
+        int[] results = new int[players.length];
+        int roundCount = 1;
+        while (true) {
+            System.out.println("Раунд " + roundCount);
+            int roundResult = play(board);
+            if (roundResult == players.length) {
+                for (int i = 0; i < results.length; i++) {
+                    results[i]++;
+                    break;
+                }
+            } else {
+                results[roundResult]++;
+                
+                Player temp = players[roundResult];
+                players[roundResult] = players[players.length - 1 - roundResult];
+                players[players.length - 1 - roundResult] = temp;
+
+                int tempRes = results[roundResult];
+                results[roundResult] = results[results.length - 1 - roundResult];
+                results[results.length - 1 - roundResult] = tempRes;
+            }
+            for (int i = 0; i < results.length; i++) {
+                if (results[i] >= pointsForWin) {
+                    return matchResult(results, i);
+                }
+            }
+            board.clean();
+            roundCount++;
         }
-        return match.getResult();
-    }*/
-    private String move(final Board board, final Player player, int numb) {
+    }
+
+    private String matchResult(int[] results, int winner) {
+        StringBuilder sb = new StringBuilder("Победитель матча: " + players[winner].getIndentifier()
+                + System.lineSeparator());
+        sb.append("Игроки, которые старались, но так и не смогли победить: ").append(System.lineSeparator());
+        for (int i = 0; i < players.length; i++) {
+            if (i != winner) {
+                sb.append(players[i].getIndentifier()).append(" с результатом ").append(results[i])
+                        .append(System.lineSeparator());
+            }
+        }
+        return sb.toString();
+    }
+
+    private int move(final Board board, final Player player, int numb) {
         final Move move = player.move(board.getTurn());
         final Result result = board.makeMove(move);
         System.out.println(board);
         if (result == Result.WIN) {
-            return player.getIndentifier() + " выйграл";
+            System.out.println(players[numb].getIndentifier() + " выйграл!");
+            return numb;
         } else if (result == Result.LOSE) {
-            return players[players.length - numb - 1].getIndentifier() + " выйграл";
+            System.out.println(players[players.length - numb - 1].getIndentifier() + " выйграл!");
+            return players.length - numb - 1;
         } else if (result == Result.DRAW) {
-            return "Ничья";
+            System.out.println("Ничья");
+            return players.length;
         } else {
-            return null;
+            return -1;
         }
     }
 }

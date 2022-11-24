@@ -18,12 +18,13 @@ public class Main {
         int k = sc.nextInt();
 
         System.out.print("Введите имена игроков: ");
-        final Game game = new Game(false, new HumanPlayer(sc.next()), new RandomPlayer("Лакер", m, n));
+        //new RandomPlayer("Лакер", m, n)
+        final Game game = new Game(false, new HumanPlayer(sc.next()), new HumanPlayer(sc.next()));
         String result;
 
-        result = game.play(new MnkBoard(m, n, k));
-        System.out.println("Игра завершилась с результатом: ");
-        System.out.print(result);
+        //System.out.println("Игра началась!");
+        result = game.match(new MnkBoard(m, n, k), 3);
+        System.out.println("Игра завершилась. " + result);
         sc.close();
     }
 }
