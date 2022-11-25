@@ -29,7 +29,8 @@ public class Game {
         int[] results = new int[players.length];
         int roundCount = 1;
         while (true) {
-            System.out.println("Раунд " + roundCount);
+
+            System.out.println("-".repeat(15) + "РАУНД " + roundCount + "-".repeat(15));
             int roundResult = play(board);
             if (roundResult == -2) {
                 return "Игра сломана.";
@@ -61,8 +62,10 @@ public class Game {
     }
 
     private String matchResult(int[] results, int winner) {
-        StringBuilder sb = new StringBuilder("Победитель матча: " + players[winner].getIndentifier()
-                + System.lineSeparator());
+        StringBuilder sb = new StringBuilder(System.lineSeparator());
+        sb.append("-".repeat(20)).append("РЕЗУЛЬТАТЫ ИГРЫ").append("-".repeat(20));
+        sb.append(System.lineSeparator());
+        sb.append("Победитель матча: ").append(players[winner].getIndentifier()).append(System.lineSeparator());
         sb.append("Игроки, которые старались, но так и не смогли победить: ").append(System.lineSeparator());
         for (int i = 0; i < players.length; i++) {
             if (i != winner) {
@@ -70,6 +73,7 @@ public class Game {
                         .append(System.lineSeparator());
             }
         }
+        sb.append("-".repeat("РЕЗУЛЬТАТЫ ИГРЫ".length() + 40));
         return sb.toString();
     }
 
