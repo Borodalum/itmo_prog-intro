@@ -15,7 +15,7 @@ public class HumanPlayer implements Player {
 
     @Override
     public Move move(final Cell cell) {
-        while(true) {
+        cycle: while(true) {
             System.out.println("Введите свой ход: ");
             int count = 0;
             ArrayList<String> tokens = new ArrayList<String>();
@@ -25,7 +25,9 @@ public class HumanPlayer implements Player {
                     tokens.add(parseSc.next());
                     count++;
                     if (count > 2) {
-                        return new Move(-1, -1, cell);
+                        System.out.println("Ход должен составлять два числа - координаты клетки.");
+                        System.out.println("Попробуйте еще раз.");
+                        continue cycle;
                     }
                 }
                 if (count == 1) {
@@ -34,7 +36,9 @@ public class HumanPlayer implements Player {
                         tokens.add(parseSc.next());
                         count++;
                         if (count > 2) {
-                            return new Move(-1, -1, cell);
+                            System.out.println("Ход должен составлять два числа - координаты клетки.");
+                            System.out.println("Попробуйте еще раз.");
+                            continue cycle;
                         }
                     }
                 }
