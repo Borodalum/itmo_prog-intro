@@ -2,15 +2,50 @@ package expression;
 
 public abstract class BinaryExpression implements AbstractExpression {
     public final AbstractExpression[] expressionList;
-    private final String sign;
+    public final String sign;
 
-    public BinaryExpression(AbstractExpression firstExp, AbstractExpression secondExp, String sign) {
+    public BinaryExpression(final AbstractExpression firstExp, final AbstractExpression secondExp, String sign) {
         this.expressionList = new AbstractExpression[] {firstExp, secondExp};
         this.sign = sign;
     }
-
     public int evaluate(int x) {
-        return x;
+        if (sign.equals("+")) {
+            return expressionList[0].evaluate(x) + expressionList[1].evaluate(x);
+        } else if (sign.equals("-")) {
+            return expressionList[0].evaluate(x) - expressionList[1].evaluate(x);
+        } else if (sign.equals("*")) {
+            return expressionList[0].evaluate(x) * expressionList[1].evaluate(x);
+        } else if (sign.equals("/")) {
+            return expressionList[0].evaluate(x) / expressionList[1].evaluate(x);
+        } else {
+            throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
+        }
+    }
+    public int evaluate(int x, int y, int z) {
+        if (sign.equals("+")) {
+            return expressionList[0].evaluate(x, y, z) + expressionList[1].evaluate(x, y, z);
+        } else if (sign.equals("-")) {
+            return expressionList[0].evaluate(x, y, z) - expressionList[1].evaluate(x, y, z);
+        } else if (sign.equals("*")) {
+            return expressionList[0].evaluate(x, y, z) * expressionList[1].evaluate(x, y, z);
+        } else if (sign.equals("/")) {
+            return expressionList[0].evaluate(x, y, z) / expressionList[1].evaluate(x, y, z);
+        } else {
+            throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
+        }
+    }
+    public double evaluate(double x) {
+        if (sign.equals("+")) {
+            return expressionList[0].evaluate(x) + expressionList[1].evaluate(x);
+        } else if (sign.equals("-")) {
+            return expressionList[0].evaluate(x) - expressionList[1].evaluate(x);
+        } else if (sign.equals("*")) {
+            return expressionList[0].evaluate(x) * expressionList[1].evaluate(x);
+        } else if (sign.equals("/")) {
+            return expressionList[0].evaluate(x) / expressionList[1].evaluate(x);
+        } else {
+            throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
+        }
     }
     @Override
     public String toString() {
@@ -21,6 +56,14 @@ public abstract class BinaryExpression implements AbstractExpression {
         }
         sb.append(")");
         return sb.toString();
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BinaryExpression))
+            return false;
+        return this.sign.equals(((BinaryExpression)obj).sign)
+                && ((BinaryExpression)obj).expressionList[0].equals(this.expressionList[0])
+                && ((BinaryExpression)obj).expressionList[1].equals(this.expressionList[1]);
     }
     @Override
     public int hashCode() {

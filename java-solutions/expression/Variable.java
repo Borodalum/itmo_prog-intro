@@ -9,6 +9,21 @@ public class Variable implements AbstractExpression {
     public int evaluate(int x) {
         return x;
     }
+    public int evaluate(int x, int y, int z) {
+        int value;
+        if (var.equals("x")) {
+            value = x;
+        } else if(var.equals("y")) {
+            value = y;
+        } else {
+            value = z;
+        }
+        return value;
+    }
+    public double evaluate(double x) {
+        return x;
+    }
+    @Override
     public String toString() {
         return var;
     }

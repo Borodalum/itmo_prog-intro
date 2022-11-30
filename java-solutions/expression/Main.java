@@ -1,14 +1,25 @@
 package expression;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        int output = new Add(
+        Scanner sc = new Scanner(System.in);
+        AbstractExpression output = new Add(
                 new Subtract(
                         new Multiply(new Variable("x"), new Variable("x")),
                         new Multiply(new Const(2), new Variable("x"))
                 ),
                 new Const(1)
-        ).evaluate(Integer.parseInt(args[0]));
-        System.out.println(output);
+        );
+        String input = sc.next();
+        try {
+            int outputEval = output.evaluate(Integer.parseInt(input));
+            System.out.println(outputEval);
+        } catch (NumberFormatException | InputMismatchException e) {
+            double outputEval = output.evaluate(Double.parseDouble(input));
+            System.out.println(outputEval);
+        }
     }
 }
