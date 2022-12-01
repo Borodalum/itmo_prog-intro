@@ -13,13 +13,6 @@ public class Main {
                 ),
                 new Const(1)
         );
-        String input = sc.next();
-        try {
-            int outputEval = output.evaluate(Integer.parseInt(input));
-            System.out.println(outputEval);
-        } catch (NumberFormatException | InputMismatchException e) {
-            double outputEval = output.evaluate(Double.parseDouble(input));
-            System.out.println(outputEval);
-        }
+        System.out.println(output.evaluate(sc.nextInt()));
     }
 }
