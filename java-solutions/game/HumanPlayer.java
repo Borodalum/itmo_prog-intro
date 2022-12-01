@@ -7,10 +7,14 @@ import java.util.Scanner;
 
 public class HumanPlayer implements Player {
     private final String indentifier;
+    private final int m;
+    private final int n;
     private final Scanner in;
-    public HumanPlayer(String indentifier) {
+    public HumanPlayer(String indentifier, int m, int n) {
         this.indentifier = indentifier;
         this.in = new Scanner(System.in);
+        this.m = m;
+        this.n = n;
     }
 
     @Override
@@ -45,7 +49,11 @@ public class HumanPlayer implements Player {
                 String row = tokens.get(0);
                 String column = tokens.get(1);
                 try {
-                    return new Move(Integer.parseInt(row) - 1, Integer.parseInt(column) - 1, cell);
+                    int cordR = Integer.parseInt(row);
+                    int cordC = Integer.parseInt(column);
+                    if (cordR == 0 || cordC == 0 || cordR > m  || cordC > n)
+                        throw new InputMismatchException("Input is bad");
+                    return new Move(cordR - 1, cordC - 1, cell);
                 } catch (NumberFormatException | InputMismatchException e) {
                     System.out.println("Ход должен составлять два числа - координаты клетки.");
                     System.out.println("Попробуйте еще раз.");

@@ -19,7 +19,7 @@ public class Main {
 
         System.out.print("Введите имена игроков: ");
         //new RandomPlayer("Лакер", m, n)
-        final Game game = new Game(false, new HumanPlayer(sc.next()),
+        final Game game = new Game(false, new HumanPlayer(sc.next(), m, n),
                 new RandomPlayer("Лакер", m, n));
         String result;
 
