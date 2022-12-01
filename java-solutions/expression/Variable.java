@@ -24,9 +24,6 @@ public class Variable implements AbstractExpression {
         }
         return value;
     }
-    public double evaluate(double x) {
-        return x;
-    }
     @Override
     public String toString() {
         return var;

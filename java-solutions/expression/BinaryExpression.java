@@ -9,7 +9,13 @@ public abstract class BinaryExpression implements AbstractExpression {
         this.sign = sign;
     }
     public int evaluate(int x) {
-        return (int)doOperation(x, false);
+        return switch (sign) {
+            case "+" -> expressionList[0].evaluate(x) + expressionList[1].evaluate(x);
+            case "-" -> expressionList[0].evaluate(x) - expressionList[1].evaluate(x);
+            case "*" -> expressionList[0].evaluate(x) * expressionList[1].evaluate(x);
+            case "/" -> expressionList[0].evaluate(x) / expressionList[1].evaluate(x);
+            default -> throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
+        };
     }
     public int evaluate(int x, int y, int z) {
         return switch (sign) {
@@ -19,39 +25,6 @@ public abstract class BinaryExpression implements AbstractExpression {
             case "/" -> expressionList[0].evaluate(x, y, z) / expressionList[1].evaluate(x, y, z);
             default -> throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
         };
-    }
-    public double evaluate(double x) {
-        return doOperation(x, true);
-    }
-    private double doOperation(double x, boolean isDouble) {
-        switch (sign) {
-            case "+":
-                if (isDouble) {
-                    return expressionList[0].evaluate(x) + expressionList[1].evaluate(x);
-                } else {
-                    return expressionList[0].evaluate((int) x) + expressionList[1].evaluate((int) x);
-                }
-            case "-":
-                if (isDouble) {
-                    return expressionList[0].evaluate(x) - expressionList[1].evaluate(x);
-                } else {
-                    return expressionList[0].evaluate((int) x) - expressionList[1].evaluate((int) x);
-                }
-            case "*":
-                if (isDouble) {
-                    return expressionList[0].evaluate(x) * expressionList[1].evaluate(x);
-                } else {
-                    return expressionList[0].evaluate((int) x) * expressionList[1].evaluate((int) x);
-                }
-            case "/":
-                if (isDouble) {
-                    return expressionList[0].evaluate(x) / expressionList[1].evaluate(x);
-                } else {
-                    return expressionList[0].evaluate((int) x) / expressionList[1].evaluate((int) x);
-                }
-            default:
-                throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
-        }
     }
     @Override
     public String toString() {
