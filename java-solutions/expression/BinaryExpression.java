@@ -12,48 +12,45 @@ public abstract class BinaryExpression implements AbstractExpression {
         return (int)doOperation(x, false);
     }
     public int evaluate(int x, int y, int z) {
-        if (sign.equals("+")) {
-            return expressionList[0].evaluate(x, y, z) + expressionList[1].evaluate(x, y, z);
-        } else if (sign.equals("-")) {
-            return expressionList[0].evaluate(x, y, z) - expressionList[1].evaluate(x, y, z);
-        } else if (sign.equals("*")) {
-            return expressionList[0].evaluate(x, y, z) * expressionList[1].evaluate(x, y, z);
-        } else if (sign.equals("/")) {
-            return expressionList[0].evaluate(x, y, z) / expressionList[1].evaluate(x, y, z);
-        } else {
-            throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
-        }
+        return switch (sign) {
+            case "+" -> expressionList[0].evaluate(x, y, z) + expressionList[1].evaluate(x, y, z);
+            case "-" -> expressionList[0].evaluate(x, y, z) - expressionList[1].evaluate(x, y, z);
+            case "*" -> expressionList[0].evaluate(x, y, z) * expressionList[1].evaluate(x, y, z);
+            case "/" -> expressionList[0].evaluate(x, y, z) / expressionList[1].evaluate(x, y, z);
+            default -> throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
+        };
     }
     public double evaluate(double x) {
         return doOperation(x, true);
     }
     private double doOperation(double x, boolean isDouble) {
-        if (sign.equals("+")) {
-            if (isDouble) {
-                return expressionList[0].evaluate(x) + expressionList[1].evaluate(x);
-            } else {
-                return expressionList[0].evaluate((int)x) + expressionList[1].evaluate((int)x);
-            }
-        } else if (sign.equals("-")) {
-            if (isDouble) {
-                return expressionList[0].evaluate(x) - expressionList[1].evaluate(x);
-            } else {
-                return expressionList[0].evaluate((int)x) - expressionList[1].evaluate((int)x);
-            }
-        } else if (sign.equals("*")) {
-            if (isDouble) {
-                return expressionList[0].evaluate(x) * expressionList[1].evaluate(x);
-            } else {
-                return expressionList[0].evaluate((int)x) * expressionList[1].evaluate((int)x);
-            }
-        } else if (sign.equals("/")) {
-            if (isDouble) {
-                return expressionList[0].evaluate(x) / expressionList[1].evaluate(x);
-            } else {
-                return expressionList[0].evaluate((int)x) / expressionList[1].evaluate((int)x);
-            }
-        } else {
-            throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
+        switch (sign) {
+            case "+":
+                if (isDouble) {
+                    return expressionList[0].evaluate(x) + expressionList[1].evaluate(x);
+                } else {
+                    return expressionList[0].evaluate((int) x) + expressionList[1].evaluate((int) x);
+                }
+            case "-":
+                if (isDouble) {
+                    return expressionList[0].evaluate(x) - expressionList[1].evaluate(x);
+                } else {
+                    return expressionList[0].evaluate((int) x) - expressionList[1].evaluate((int) x);
+                }
+            case "*":
+                if (isDouble) {
+                    return expressionList[0].evaluate(x) * expressionList[1].evaluate(x);
+                } else {
+                    return expressionList[0].evaluate((int) x) * expressionList[1].evaluate((int) x);
+                }
+            case "/":
+                if (isDouble) {
+                    return expressionList[0].evaluate(x) / expressionList[1].evaluate(x);
+                } else {
+                    return expressionList[0].evaluate((int) x) / expressionList[1].evaluate((int) x);
+                }
+            default:
+                throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
         }
     }
     @Override

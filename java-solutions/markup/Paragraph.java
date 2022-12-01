@@ -2,7 +2,7 @@ package markup;
 import java.util.List;
 
 public class Paragraph implements Markup { 
-    private List<Markup> elements;
+    private final List<Markup> elements;
     public Paragraph(List<Markup> elements) {
         this.elements = elements;
     }
