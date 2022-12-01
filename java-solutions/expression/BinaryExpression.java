@@ -9,17 +9,7 @@ public abstract class BinaryExpression implements AbstractExpression {
         this.sign = sign;
     }
     public int evaluate(int x) {
-        if (sign.equals("+")) {
-            return expressionList[0].evaluate(x) + expressionList[1].evaluate(x);
-        } else if (sign.equals("-")) {
-            return expressionList[0].evaluate(x) - expressionList[1].evaluate(x);
-        } else if (sign.equals("*")) {
-            return expressionList[0].evaluate(x) * expressionList[1].evaluate(x);
-        } else if (sign.equals("/")) {
-            return expressionList[0].evaluate(x) / expressionList[1].evaluate(x);
-        } else {
-            throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
-        }
+        return (int)doOperation(x, false);
     }
     public int evaluate(int x, int y, int z) {
         if (sign.equals("+")) {
@@ -35,14 +25,33 @@ public abstract class BinaryExpression implements AbstractExpression {
         }
     }
     public double evaluate(double x) {
+        return doOperation(x, true);
+    }
+    private double doOperation(double x, boolean isDouble) {
         if (sign.equals("+")) {
-            return expressionList[0].evaluate(x) + expressionList[1].evaluate(x);
+            if (isDouble) {
+                return expressionList[0].evaluate(x) + expressionList[1].evaluate(x);
+            } else {
+                return expressionList[0].evaluate((int)x) + expressionList[1].evaluate((int)x);
+            }
         } else if (sign.equals("-")) {
-            return expressionList[0].evaluate(x) - expressionList[1].evaluate(x);
+            if (isDouble) {
+                return expressionList[0].evaluate(x) - expressionList[1].evaluate(x);
+            } else {
+                return expressionList[0].evaluate((int)x) - expressionList[1].evaluate((int)x);
+            }
         } else if (sign.equals("*")) {
-            return expressionList[0].evaluate(x) * expressionList[1].evaluate(x);
+            if (isDouble) {
+                return expressionList[0].evaluate(x) * expressionList[1].evaluate(x);
+            } else {
+                return expressionList[0].evaluate((int)x) * expressionList[1].evaluate((int)x);
+            }
         } else if (sign.equals("/")) {
-            return expressionList[0].evaluate(x) / expressionList[1].evaluate(x);
+            if (isDouble) {
+                return expressionList[0].evaluate(x) / expressionList[1].evaluate(x);
+            } else {
+                return expressionList[0].evaluate((int)x) / expressionList[1].evaluate((int)x);
+            }
         } else {
             throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
         }

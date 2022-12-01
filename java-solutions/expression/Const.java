@@ -1,36 +1,30 @@
 package expression;
 
 public class Const implements AbstractExpression {
-    private final String value;
+    private final double value;
     private final boolean isDouble;
     public Const(int value) {
-        this.value = String.valueOf(value);
+        this.value = (double)value;
         isDouble = false;
     }
     public Const(double value) {
-        this.value = String.valueOf(value);
+        this.value = value;
         isDouble = true;
     }
 
     public int evaluate(int x, int y, int z) {
-        if (isDouble)
-            return (int)Double.parseDouble(value);
-        return Integer.parseInt(value);
+        return (int)value;
     }
     public int evaluate(int x) {
-        if (isDouble)
-            return (int)Double.parseDouble(value);
-        return Integer.parseInt(value);
+        return (int)value;
     }
     public double evaluate(double x) {
-        if (isDouble)
-            return Double.parseDouble(value);
-        return (double)Integer.parseInt(value);
+        return value;
     }
 
     @Override
     public String toString() {
-        return value;
+        return isDouble ? String.valueOf(value) : String.valueOf(((int)value));
     }
     @Override
     public boolean equals(Object otherExp) {
@@ -40,10 +34,10 @@ public class Const implements AbstractExpression {
     public int hashCode() {
         int result;
         if (isDouble) {
-            long doubleAsLong = Double.doubleToLongBits(Double.parseDouble(value));
+            long doubleAsLong = Double.doubleToLongBits(value);
             result = (int)(doubleAsLong ^ (doubleAsLong >> 32));
         } else {
-            result = Integer.parseInt(value);
+            result = (int)value;
         }
         return result;
     }

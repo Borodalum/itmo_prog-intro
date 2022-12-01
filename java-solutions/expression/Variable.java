@@ -1,5 +1,7 @@
 package expression;
 
+import java.util.InputMismatchException;
+
 public class Variable implements AbstractExpression {
     private final String var;
     public Variable(String var) {
@@ -13,10 +15,12 @@ public class Variable implements AbstractExpression {
         int value;
         if (var.equals("x")) {
             value = x;
-        } else if(var.equals("y")) {
+        } else if (var.equals("y")) {
             value = y;
-        } else {
+        } else if (var.equals("z")) {
             value = z;
+        } else {
+            throw new InputMismatchException("I can work with variable names 'x', 'y', 'z'. Sorry %(");
         }
         return value;
     }
