@@ -51,7 +51,7 @@ public class HumanPlayer implements Player {
                 try {
                     int cordR = Integer.parseInt(row);
                     int cordC = Integer.parseInt(column);
-                    if (cordR == 0 || cordC == 0 || cordR > m  || cordC > n)
+                    if (cordR <= 0 || cordC <= 0 || cordR > m  || cordC > n)
                         throw new InputMismatchException("Input is bad");
                     return new Move(cordR - 1, cordC - 1, cell);
                 } catch (NumberFormatException | InputMismatchException e) {
