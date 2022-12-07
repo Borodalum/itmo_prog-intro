@@ -1,3 +1,4 @@
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.io.*;
 public class WordStatWords {
@@ -6,7 +7,7 @@ public class WordStatWords {
         try {
             BufferedReader mainReader = new BufferedReader(new InputStreamReader(
                 new FileInputStream(args[0]),
-                "UTF-8"
+                    StandardCharsets.UTF_8
             ));
             try {
                 String lineReader = mainReader.readLine();
@@ -21,23 +22,17 @@ public class WordStatWords {
                         || lineReader.charAt(i) == '\'') {
                             wordEndPos++;
                         } else {
-                            if (wordEndPos != wordStartPos) { 
+                            if (wordEndPos != wordStartPos) {
                                 curWord = lineReader.substring(wordStartPos, wordEndPos).trim();
-                                if (wordStat.containsKey(curWord)) {
-                                    int curCount = wordStat.get(curWord);
-                                    wordStat.put(curWord, wordStat.getOrDefault(curWord, 0) + 1);
-                                }
+                                wordStat.put(curWord, wordStat.getOrDefault(curWord, 0) + 1);
                             }
                             wordEndPos = i + 1;
                             wordStartPos = i + 1;
                         }
                     }
-                    if (wordEndPos != wordStartPos) { 
+                    if (wordEndPos != wordStartPos) {
                         curWord = lineReader.substring(wordStartPos, wordEndPos).trim();
-                        if (wordStat.containsKey(curWord)) {
-                            int curCount = wordStat.get(curWord);
-                            wordStat.put(curWord, wordStat.getOrDefault(curWord, 0) + 1);
-                        }
+                        wordStat.put(curWord, wordStat.getOrDefault(curWord, 0) + 1);
                     }
                     lineReader = mainReader.readLine();
                 }
@@ -50,7 +45,7 @@ public class WordStatWords {
             try { 
                 BufferedWriter mainWriter = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(args[1]),
-                    "UTF-8"
+                        StandardCharsets.UTF_8
                 ));
                 try { 
                     for (Map.Entry entry : wordStat.entrySet()) {
