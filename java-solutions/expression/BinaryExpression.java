@@ -2,8 +2,8 @@ package expression;
 
 public abstract class BinaryExpression implements AbstractExpression {
     // :NOTE: паблик?
-    public final AbstractExpression[] expressionList;
-    public final String sign;
+    private final AbstractExpression[] expressionList;
+    private final String sign;
 
     public BinaryExpression(final AbstractExpression firstExp, final AbstractExpression secondExp, String sign) {
         this.expressionList = new AbstractExpression[]{firstExp, secondExp};
@@ -12,25 +12,24 @@ public abstract class BinaryExpression implements AbstractExpression {
 
     // :NOTE: нарушение SOLID
     public int evaluate(int x) {
-        return switch (sign) {
-            case "+" -> expressionList[0].evaluate(x) + expressionList[1].evaluate(x);
-            case "-" -> expressionList[0].evaluate(x) - expressionList[1].evaluate(x);
-            case "*" -> expressionList[0].evaluate(x) * expressionList[1].evaluate(x);
-            case "/" -> expressionList[0].evaluate(x) / expressionList[1].evaluate(x);
-            default -> throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
-        };
+        return getResult(expressionList[0].evaluate(x), expressionList[1].evaluate(x));
     }
 
     public int evaluate(int x, int y, int z) {
+        return getResult(expressionList[0].evaluate(x, y, z), expressionList[1].evaluate(x, y, z));
+    }
+    private int getResult(int firstOperand, int secondOperand) {
         return switch (sign) {
-            case "+" -> expressionList[0].evaluate(x, y, z) + expressionList[1].evaluate(x, y, z);
-            case "-" -> expressionList[0].evaluate(x, y, z) - expressionList[1].evaluate(x, y, z);
-            case "*" -> expressionList[0].evaluate(x, y, z) * expressionList[1].evaluate(x, y, z);
-            case "/" -> expressionList[0].evaluate(x, y, z) / expressionList[1].evaluate(x, y, z);
+            case "+" -> firstOperand + secondOperand;
+            case "-" -> firstOperand - secondOperand;
+            case "*" -> firstOperand * secondOperand;
+            case "/" -> firstOperand / secondOperand;
             default -> throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
         };
     }
-
+    public String getSign() {
+        return this.sign;
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -41,14 +40,19 @@ public abstract class BinaryExpression implements AbstractExpression {
         sb.append(")");
         return sb.toString();
     }
-
+    public AbstractExpression getFirstOperand() {
+        return expressionList[0];
+    }
+    public AbstractExpression getSecondOperand() {
+        return expressionList[1];
+    }
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof BinaryExpression))
             return false;
-        return this.sign.equals(((BinaryExpression) obj).sign)
-                && ((BinaryExpression) obj).expressionList[0].equals(this.expressionList[0])
-                && ((BinaryExpression) obj).expressionList[1].equals(this.expressionList[1]);
+        return this.sign.equals(((BinaryExpression) obj).getSign())
+                && ((BinaryExpression) obj).getFirstOperand().equals(this.expressionList[0])
+                && ((BinaryExpression) obj).getSecondOperand().equals(this.expressionList[1]);
     }
 
     @Override

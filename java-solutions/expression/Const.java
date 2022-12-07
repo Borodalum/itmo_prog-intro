@@ -17,10 +17,13 @@ public class Const implements AbstractExpression {
     public String toString() {
         return String.valueOf(value);
     }
+    public int getValue() {
+        return this.value;
+    }
     @Override
     public boolean equals(Object otherExp) {
         // :NOTE: сравнение через toString???
-        return (otherExp instanceof Const) && ((Const)otherExp).toString().equals(this.toString());
+        return (otherExp instanceof Const) && ((Const)otherExp).getValue() == this.getValue();
     }
     @Override
     public int hashCode() {
