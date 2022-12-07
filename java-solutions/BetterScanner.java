@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.FileInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.InputMismatchException;
 
 import java.lang.StringBuilder;
@@ -13,13 +14,13 @@ public class BetterScanner {
     private static final int BUFFER_SIZE = 1024;
     
     private final Reader scanInput;
-    private char[] charBuffer = new char[BUFFER_SIZE];
+    private final char[] charBuffer = new char[BUFFER_SIZE];
     private int curBufferSize = 0;
     private int posInBuffer = 0;
     private boolean hasLine = false;
     private boolean hasNext = false;
 
-    private StringBuilder outputString = new StringBuilder();
+    private final StringBuilder outputString = new StringBuilder();
     
     public BetterScanner(InputStream inputStream) {
         scanInput = new InputStreamReader(inputStream);
@@ -27,7 +28,7 @@ public class BetterScanner {
     public BetterScanner(File inputFile) throws IOException {
         scanInput = new InputStreamReader(
             new FileInputStream(inputFile),
-            "UTF-8"
+                StandardCharsets.UTF_8
         );
     }
     public BetterScanner(String inputString) {
@@ -43,12 +44,8 @@ public class BetterScanner {
         }
     }
     private boolean isLineSeparator(char inChar) {
-        if (inChar == '\r' || inChar == '\n' || inChar == '\u0085'
-        || inChar == '\u2028' || inChar == '\u2029') {
-            return true;
-        } else { 
-            return false;
-        }
+        return inChar == '\r' || inChar == '\n' || inChar == '\u0085'
+                || inChar == '\u2028' || inChar == '\u2029';
     }
 
     public String nextLine() {
@@ -57,26 +54,19 @@ public class BetterScanner {
         }
         String outputLine;
         boolean wasLineSep = false;
-        if (hasLine == false) {
+        if (!hasLine) {
             outputString.setLength(0);
             while (posInBuffer < curBufferSize) {  
                 if (this.isLineSeparator(charBuffer[posInBuffer])) {
                     if (charBuffer[posInBuffer] == '\r') {
-                        wasLineSep = true;
-                        posInBuffer++;
-                    } else if (charBuffer[posInBuffer] == '\n' && wasLineSep) {
-                        posInBuffer++;
-                        hasLine = true;
-                        break;
-                    } else {
-                        posInBuffer++;
-                        hasLine = true;
-                        break;
+                        if (posInBuffer + 1 < curBufferSize && charBuffer[posInBuffer + 1] == '\n') {
+                            posInBuffer++;
+                        }
                     }
+                    posInBuffer++;
+                    hasLine = true;
+                    break;
                 } else {
-                    if (wasLineSep) {
-                        break;
-                    }
                     outputString.append(charBuffer[posInBuffer]);   
                     posInBuffer++;
                 }
@@ -85,7 +75,7 @@ public class BetterScanner {
                 }
             }
             outputLine = outputString.toString();
-            if (outputLine.isEmpty() == false) {
+            if (!outputLine.isEmpty()) {
                 hasLine = true;
             }
         } else { 
@@ -106,7 +96,7 @@ public class BetterScanner {
         }
         String outputWord;
         boolean wasWhiteSpace = false;
-        if (hasNext == false) {
+        if (!hasNext) {
             outputString.setLength(0);
             while (posInBuffer < curBufferSize) {  
                 if (Character.isWhitespace(charBuffer[posInBuffer])) {
@@ -124,7 +114,7 @@ public class BetterScanner {
                 }
             }
             outputWord = outputString.toString();
-            if (outputWord.isEmpty() == false) {
+            if (!outputWord.isEmpty()) {
                 hasNext = true;
             }
         } else { 
@@ -149,11 +139,9 @@ public class BetterScanner {
         try { 
             int checkInt = this.nextInt();
             return true;
-        } catch (InputMismatchException e) {
+        } catch (InputMismatchException | NumberFormatException e) {
             return false;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        } 
     }
     
     public void close() throws IOException {
