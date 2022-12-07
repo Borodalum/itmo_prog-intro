@@ -19,6 +19,7 @@ public class Const implements AbstractExpression {
     }
     @Override
     public boolean equals(Object otherExp) {
+        // :NOTE: сравнение через toString???
         return (otherExp instanceof Const) && ((Const)otherExp).toString().equals(this.toString());
     }
     @Override
