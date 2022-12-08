@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 
 public class Variable implements AbstractExpression {
     private final String var;
+
     public Variable(String var) {
         this.var = var;
     }
@@ -11,6 +12,7 @@ public class Variable implements AbstractExpression {
     public int evaluate(int x) {
         return x;
     }
+
     public int evaluate(int x, int y, int z) {
         int value;
         if (var.equals("x")) {
@@ -24,6 +26,7 @@ public class Variable implements AbstractExpression {
         }
         return value;
     }
+
     @Override
     public String toString() {
         return var;
@@ -33,6 +36,7 @@ public class Variable implements AbstractExpression {
     public boolean equals(Object otherExp) {
         return (otherExp instanceof Variable) && otherExp.toString().equals(var);
     }
+
     @Override
     public int hashCode() {
         return var.hashCode();
