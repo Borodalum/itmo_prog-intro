@@ -18,18 +18,13 @@ public abstract class BinaryExpression implements AbstractExpression {
     public int evaluate(int x, int y, int z) {
         return getResult(expressionList[0].evaluate(x, y, z), expressionList[1].evaluate(x, y, z));
     }
-    private int getResult(int firstOperand, int secondOperand) {
-        return switch (sign) {
-            case "+" -> firstOperand + secondOperand;
-            case "-" -> firstOperand - secondOperand;
-            case "*" -> firstOperand * secondOperand;
-            case "/" -> firstOperand / secondOperand;
-            default -> throw new UnsupportedOperationException("Unsupported operation " + "'" + sign + "'");
-        };
-    }
+
+    protected abstract int getResult(int firstOperand, int secondOperand);
+
     public String getSign() {
         return this.sign;
     }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -40,12 +35,15 @@ public abstract class BinaryExpression implements AbstractExpression {
         sb.append(")");
         return sb.toString();
     }
-    public AbstractExpression getFirstOperand() {
+
+    protected AbstractExpression getFirstOperand() {
         return expressionList[0];
     }
-    public AbstractExpression getSecondOperand() {
+
+    protected AbstractExpression getSecondOperand() {
         return expressionList[1];
     }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof BinaryExpression))
