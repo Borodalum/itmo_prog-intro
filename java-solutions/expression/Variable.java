@@ -14,17 +14,12 @@ public class Variable implements AbstractExpression {
     }
 
     public int evaluate(int x, int y, int z) {
-        int value;
-        if (var.equals("x")) {
-            value = x;
-        } else if (var.equals("y")) {
-            value = y;
-        } else if (var.equals("z")) {
-            value = z;
-        } else {
-            throw new InputMismatchException("I can work with variable names 'x', 'y', 'z'. Sorry %(");
-        }
-        return value;
+        return switch (var) {
+            case "x" -> x;
+            case "y" -> y;
+            case "z" -> z;
+            default -> throw new InputMismatchException("I can work with variable names 'x', 'y', 'z'. Sorry %(");
+        };
     }
 
     @Override
@@ -34,7 +29,7 @@ public class Variable implements AbstractExpression {
 
     @Override
     public boolean equals(Object otherExp) {
-        return (otherExp instanceof Variable) && otherExp.toString().equals(var);
+        return (otherExp instanceof Variable) && ((Variable) otherExp).var.equals(var);
     }
 
     @Override
