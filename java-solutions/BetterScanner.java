@@ -11,7 +11,7 @@ import java.util.InputMismatchException;
 import java.lang.StringBuilder;
 
 public class BetterScanner {
-    private static final int BUFFER_SIZE = 1024;
+    private static final int BUFFER_SIZE = 1;
     
     private final Reader scanInput;
     private final char[] charBuffer = new char[BUFFER_SIZE];
@@ -53,23 +53,31 @@ public class BetterScanner {
             fillBuffer();
         }
         String outputLine;
-        //boolean wasLineSep = false;
+        boolean wasLineSep = false;
         if (!hasLine) {
             outputString.setLength(0);
             while (posInBuffer < curBufferSize) {  
                 if (this.isLineSeparator(charBuffer[posInBuffer])) {
+                    if (wasLineSep && charBuffer[posInBuffer] != '\n') {
+                        hasLine = true;
+                        break;
+                    }
                     if (charBuffer[posInBuffer] == '\r') {
-                        if (posInBuffer + 1 < curBufferSize && charBuffer[posInBuffer + 1] == '\n') {
-                            posInBuffer++;
-                        } else if (posInBuffer + 1 == curBufferSize && curBufferSize == BUFFER_SIZE) {
+                        wasLineSep = true;
+                        posInBuffer++;
+                        if (posInBuffer == curBufferSize && curBufferSize == BUFFER_SIZE) {
                             fillBuffer();
-                            continue;
                         }
+                        continue;
                     }
                     posInBuffer++;
                     hasLine = true;
                     break;
                 } else {
+                    if (wasLineSep) {
+                        hasLine = true;
+                        break;
+                    }
                     outputString.append(charBuffer[posInBuffer]);   
                     posInBuffer++;
                 }
