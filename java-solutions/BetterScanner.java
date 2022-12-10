@@ -53,7 +53,7 @@ public class BetterScanner {
             fillBuffer();
         }
         String outputLine;
-        boolean wasLineSep = false;
+        //boolean wasLineSep = false;
         if (!hasLine) {
             outputString.setLength(0);
             while (posInBuffer < curBufferSize) {  
@@ -61,6 +61,9 @@ public class BetterScanner {
                     if (charBuffer[posInBuffer] == '\r') {
                         if (posInBuffer + 1 < curBufferSize && charBuffer[posInBuffer + 1] == '\n') {
                             posInBuffer++;
+                        } else if (posInBuffer + 1 == curBufferSize && curBufferSize == BUFFER_SIZE) {
+                            fillBuffer();
+                            continue;
                         }
                     }
                     posInBuffer++;
