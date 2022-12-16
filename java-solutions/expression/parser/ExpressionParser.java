@@ -10,7 +10,7 @@ public final class ExpressionParser extends BaseParser implements TripleParser {
             "*", 2, "/", 2
     );
 
-    private int conec = 0;
+    private int balance = 0;
 
     public ExpressionParser() {
     }
@@ -40,7 +40,7 @@ public final class ExpressionParser extends BaseParser implements TripleParser {
             return parseCount();
         } else if (expect('(')) {
             take();
-            conec++;
+            balance++;
             return parseBrackets();
         }
         throw error("expect operand, take", true, true);
@@ -50,7 +50,7 @@ public final class ExpressionParser extends BaseParser implements TripleParser {
         skipWhitespaces();
         if (eof() || expect(')')) {
             if (expect(')')) {
-                conec--;
+                balance--;
             }
             take();
             return exp;
@@ -115,9 +115,9 @@ public final class ExpressionParser extends BaseParser implements TripleParser {
     }
 
     private AbstractExpression parseBrackets() {
-        int conec = this.conec;
+        int lastBalance = this.balance;
         AbstractExpression bracket = parseOperation(parseOperand(), -1, "");
-        while (!eof() && this.conec >= conec) {
+        while (!eof() && this.balance >= lastBalance) {
             bracket = parseOperation(bracket, -1, "");
         }
         return bracket;
