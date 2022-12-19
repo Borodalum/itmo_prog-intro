@@ -1,9 +1,9 @@
 package expression;
 
-public class Negated implements AbstractExpression {
+public class Negate implements AbstractExpression {
     private final AbstractExpression exp;
 
-    public Negated(AbstractExpression exp) {
+    public Negate(AbstractExpression exp) {
         this.exp = exp;
     }
 
@@ -26,7 +26,7 @@ public class Negated implements AbstractExpression {
 
     @Override
     public boolean equals(Object exp) {
-        return (exp instanceof AbstractExpression) && ((Negated) exp).getInside().equals(exp);
+        return (exp instanceof AbstractExpression) && ((Negate) exp).getInside().equals(exp);
     }
 
     @Override

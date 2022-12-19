@@ -111,7 +111,7 @@ public final class ExpressionParser extends BaseParser implements TripleParser {
     private AbstractExpression parseNegated() {
         if (beetwin('0', '9'))
             return new Const(parseInteger(true));
-        return new Negated(parseOperand());
+        return new Negate(parseOperand());
     }
 
     private AbstractExpression parseBrackets() {
