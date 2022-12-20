@@ -5,10 +5,7 @@ import expression.*;
 import java.util.Map;
 
 public final class ExpressionParser extends BaseParser implements TripleParser {
-    private static final Map<String, Integer> PRIORITIES = Map.of(
-            "+", 0, "-", 1,
-            "*", 2, "/", 2
-    );
+    private static final Map<String, Integer> PRIORITIES = Map.of("+", 0, "-", 1, "*", 2, "/", 2);
 
     private int balance = 0;
 
@@ -108,9 +105,11 @@ public final class ExpressionParser extends BaseParser implements TripleParser {
         }
         return new Count(parseOperand());
     }
+
     private AbstractExpression parseNegated() {
-        if (beetwin('0', '9'))
+        if (beetwin('0', '9')) {
             return new Const(parseInteger(true));
+        }
         return new Negate(parseOperand());
     }
 

@@ -53,8 +53,9 @@ public abstract class BaseParser {
 
     protected int parseInteger(boolean isNegative) {
         StringBuilder sb = new StringBuilder();
-        if (isNegative)
+        if (isNegative) {
             sb.append('-');
+        }
         while ('0' <= ch && ch <= '9') {
             sb.append(ch);
             take();
@@ -64,11 +65,13 @@ public abstract class BaseParser {
 
     protected IllegalArgumentException error(String message, boolean showPos, boolean showCharacter) {
         StringBuilder sb = new StringBuilder();
-        if (showPos)
+        if (showPos) {
             sb.append(pos).append(": ");
+        }
         sb.append(message);
-        if (showCharacter)
+        if (showCharacter) {
             sb.append(" '").append(ch).append("'");
+        }
         sb.append('.');
         return new IllegalArgumentException(sb.toString());
     }
