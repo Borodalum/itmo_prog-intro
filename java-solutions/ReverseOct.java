@@ -3,12 +3,12 @@ import java.util.*;
 public class ReverseOct {
     public static void main( String[] args ) {
         BetterScanner mainScan = new BetterScanner(System.in);
-        int[][] resultArray = new int[1][1];
+        int[][] resultArray = new int[4][4];
         int height = 0; 
         while (mainScan.hasNextLine()) {
             String mN = mainScan.nextLine();
             BetterScanner lineScan = new BetterScanner(mN);
-            int[] lineArray = new int[1];
+            int[] lineArray = new int[4];
             int width = 0;
             while (lineScan.hasNext()) {
                 lineArray[width] = Integer.parseUnsignedInt(lineScan.next(), 8);
